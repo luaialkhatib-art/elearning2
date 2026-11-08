@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>بوابة المعلم - مدرسة ذكور مدينة إربد الإعدادية الثانية</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  <style>
+    :root {
+      --primary: #1e3a8a;
+      --primary-light: #3b82f6;
+      --primary-dark: #172554;
+      --secondary: #0d9488;
+      --accent: #f59e0b;
+      --accent-hover: #d97706;
+      --bg: #f8fafc;
+      --surface: #ffffff;
+      --text: #0f172a;
+      --text-muted: #64748b;
+      --border: #e2e8f0;
+      --radius: 12px;
+      --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.07), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+      --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.05);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Tajawal', sans-serif; }
+    body { background-color: var(--bg); color: var(--text); line-height: 1.6; }
+    a { text-decoration: none; color: inherit; }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
+    
+    header { background: #ffffff; border-bottom: 2px solid var(--border); position: sticky; top: 0; z-index: 100; box-shadow: var(--shadow); }
+    .top-bar { background: var(--primary-dark); color: #fff; padding: 0.5rem 0; font-size: 0.88rem; }
+    .top-bar-inner { display: flex; justify-content: space-between; align-items: center; }
+    .nav-bar { display: flex; justify-content: space-between; align-items: center; padding: 1rem 0; }
+    .brand { display: flex; align-items: center; gap: 1rem; }
+    .brand-icon { width: 48px; height: 48px; background: linear-gradient(135deg, var(--primary), var(--secondary)); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.5rem; }
+    .brand-text h1 { font-size: 1.25rem; font-weight: 800; color: var(--primary); }
+    .brand-text p { font-size: 0.8rem; color: var(--text-muted); font-weight: 500; }
+    .nav-links { display: flex; gap: 1.5rem; list-style: none; }
+    .nav-links a { font-weight: 600; color: var(--text); transition: color 0.2s; padding: 0.5rem 0.75rem; border-radius: 8px; }
+    .nav-links a:hover, .nav-links a.active { color: var(--primary-light); background: #eff6ff; }
+    
+    .hero { background: linear-gradient(135deg, #1e3a8a 0%, #0d9488 100%); color: white; padding: 4.5rem 0 3.5rem; text-align: center; border-radius: 0 0 30px 30px; }
+    .hero h2 { font-size: 2.3rem; font-weight: 800; margin-bottom: 1rem; }
+    .hero p { font-size: 1.15rem; max-width: 750px; margin: 0 auto 2rem; opacity: 0.95; }
+    .hero-badges { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; }
+    .badge { background: rgba(255, 255, 255, 0.2); padding: 0.4rem 1rem; border-radius: 50px; font-size: 0.9rem; backdrop-filter: blur(4px); border: 1px solid rgba(255,255,255,0.3); }
+
+    .section-title { text-align: center; margin: 3rem 0 2rem; }
+    .section-title h3 { font-size: 1.8rem; font-weight: 800; color: var(--primary); position: relative; display: inline-block; }
+    .section-title h3::after { content: ''; position: absolute; bottom: -8px; left: 50%; transform: translateX(-50%); width: 60px; height: 4px; background: var(--accent); border-radius: 2px; }
+    .section-title p { color: var(--text-muted); margin-top: 0.8rem; }
+
+    .grade-tabs { display: flex; justify-content: center; gap: 0.75rem; margin-bottom: 2rem; flex-wrap: wrap; }
+    .tab-btn { background: var(--surface); border: 1px solid var(--border); padding: 0.6rem 1.4rem; border-radius: 50px; font-weight: 700; cursor: pointer; transition: all 0.2s; }
+    .tab-btn.active, .tab-btn:hover { background: var(--primary); color: white; border-color: var(--primary); }
+
+    .grid-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1.5rem; }
+    .card { background: var(--surface); border-radius: var(--radius); padding: 1.5rem; border: 1px solid var(--border); box-shadow: var(--shadow); transition: transform 0.2s, box-shadow 0.2s; }
+    .card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+    .card-icon { font-size: 2rem; color: var(--secondary); margin-bottom: 1rem; }
+    .card h4 { font-size: 1.15rem; margin-bottom: 0.5rem; color: var(--primary-dark); }
+    .card p { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem; }
+    
+    .btn { display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 0.6rem 1.2rem; border-radius: 8px; font-weight: 600; cursor: pointer; border: none; transition: background 0.2s; font-size: 0.9rem; }
+    .btn-primary { background: var(--primary); color: white; }
+    .btn-primary:hover { background: var(--primary-dark); }
+    .btn-secondary { background: #eff6ff; color: var(--primary); }
+    .btn-secondary:hover { background: #dbeafe; }
+    .btn-accent { background: var(--accent); color: #fff; }
+    .btn-accent:hover { background: var(--accent-hover); }
+
+    .game-section { background: #f1f5f9; padding: 3rem 0; border-radius: 24px; margin: 3rem 0; }
+    .game-box { background: white; border-radius: var(--radius); padding: 2rem; border: 1px solid var(--border); box-shadow: var(--shadow-lg); max-width: 700px; margin: 0 auto; text-align: center; }
+    .memory-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 1.5rem; }
+    .memory-card { aspect-ratio: 1; background: var(--primary-light); color: transparent; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-weight: bold; cursor: pointer; font-size: 0.95rem; text-align: center; padding: 8px; transition: transform 0.3s; }
+    .memory-card.flipped { background: white; color: var(--primary-dark); border: 2px solid var(--primary-light); transform: rotateY(180deg); }
+    .memory-card.matched { background: #d1fae5; color: #065f46; border: 2px solid #34d399; cursor: default; }
+
+    footer { background: var(--primary-dark); color: #ffffff; padding: 3rem 0 1.5rem; margin-top: 4rem; }
+    .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 2rem; margin-bottom: 2rem; }
+    .footer-col h4 { font-size: 1.1rem; margin-bottom: 1rem; color: #93c5fd; }
+    .footer-col p, .footer-col li { font-size: 0.9rem; color: #cbd5e1; margin-bottom: 0.5rem; list-style: none; }
+    .footer-bottom { border-top: 1px solid rgba(255, 255, 255, 0.1); padding-top: 1.5rem; text-align: center; font-size: 0.95rem; }
+    .highlight-admin { color: #facc15; font-weight: 700; }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="top-bar">
+      <div class="container top-bar-inner">
+        <span><i class="fa-solid fa-graduation-cap"></i> العام الدراسي 2026 / 2027</span>
+        <span>مدرسة ذكور مدينة إربد الإعدادية الثانية</span>
+      </div>
+    </div>
+    <div class="container">
+      <div class="nav-bar">
+        <div class="brand">
+          <div class="brand-icon"><i class="fa-solid fa-book-open-reader"></i></div>
+          <div class="brand-text">
+            <h1>بوابة المعلم</h1>
+            <p>مدرسة ذكور مدينة إربد الإعدادية الثانية</p>
+          </div>
+        </div>
+        <ul class="nav-links">
+          <li><a href="#home" class="active">الرئيسية</a></li>
+          <li><a href="#curriculum">المناهج المطورة</a></li>
+          <li><a href="#games">الألعاب التعليمية</a></li>
+          <li><a href="#exams">الاختبارات وأوراق العمل</a></li>
+          <li><a href="#contact">تواصل معنا</a></li>
+        </ul>
+      </div>
+    </div>
+  </header>
+
+  <section class="hero" id="home">
+    <div class="container">
+      <h2>المنصة الأكاديمية التفاعلية المتكاملة</h2>
+      <p>بوابة المعلم المتخصصة للمناهج المطورة الحديثة 2026 / 2027 للمرحلة الأساسية العليا (الصف السابع - الصف العاشر)</p>
+      <div class="hero-badges">
+        <span class="badge"><i class="fa-solid fa-shapes"></i> ألعاب تعليمية تفاعلية</span>
+        <span class="badge"><i class="fa-solid fa-file-signature"></i> اختبارات وأوراق عمل محوسبة</span>
+        <span class="badge"><i class="fa-solid fa-laptop-code"></i> تصميم حصص نشطة</span>
+      </div>
+    </div>
+  </section>
+
+  <main class="container">
+    <section id="curriculum">
+      <div class="section-title">
+        <h3>المناهج المطورة 2026 / 2027</h3>
+        <p>اختر الصف لاستعراض الوحدات والمواد الدراسية المقررة</p>
+      </div>
+
+      <div class="grade-tabs">
+        <button class="tab-btn active" onclick="switchGrade('g7', this)">الصف السابع</button>
+        <button class="tab-btn" onclick="switchGrade('g8', this)">الصف الثامن</button>
+        <button class="tab-btn" onclick="switchGrade('g9', this)">الصف التاسع</button>
+        <button class="tab-btn" onclick="switchGrade('g10', this)">الصف العاشر</button>
+      </div>
+
+      <div id="grade-content" class="grid-cards">
+        <!-- يتم ملء المحتوى ديناميكياً بواسطة JavaScript -->
+      </div>
+    </section>
+
+    <section id="games" class="game-section">
+      <div class="container">
+        <div class="section-title">
+          <h3>استوديو الألعاب التعليمية التفاعلية</h3>
+          <p>لعبة مطابقة المفاهيم والمصطلحات العلمية - تجربة تفاعلية للصف الدراسي</p>
+        </div>
+
+        <div class="game-box">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+            <h4><i class="fa-solid fa-puzzle-piece text-secondary"></i> لعبة مطابقة الرموز والمفاهيم</h4>
+            <span id="score" style="font-weight: bold; color: var(--primary);">النقاط: 0</span>
+          </div>
+          <p style="font-size: 0.9rem; color: var(--text-muted);">اقلب البطاقات وطابق بين كل مصطلح ومفهومه العلمي المقابل له.</p>
+          
+          <div class="memory-grid" id="memoryGrid"></div>
+          
+          <button class="btn btn-primary" onclick="initMemoryGame()" style="margin-top: 1.5rem;">
+            <i class="fa-solid fa-rotate-right"></i> إعادة تشغيل اللعبة
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <section id="exams">
+      <div class="section-title">
+        <h3>الاختبارات وأوراق العمل والملخصات</h3>
+        <p>نماذج وأوراق عمل جاهزة للتحميل والاستخدام الفوري</p>
+      </div>
+      <div class="grid-cards">
+        <div class="card">
+          <div class="card-icon"><i class="fa-solid fa-file-lines"></i></div>
+          <h4>ورقة عمل رياضيات - المعادلات الخطية</h4>
+          <p>الصف السابع - الفصل الدراسي الأول، تغطي المفاهيم المطورة لعام 2026/2027.</p>
+          <button class="btn btn-secondary" onclick="alert('جاري تنزيل ورقة العمل...')"><i class="fa-solid fa-download"></i> تحميل الورقة</button>
+        </div>
+        <div class="card">
+          <div class="card-icon"><i class="fa-solid fa-atom"></i></div>
+          <h4>اختبار قصير في العلوم - الجدول الدوري</h4>
+          <p>الصف الثامن - يشمل أسئلة موضوعية ومهارات التفكير الناقد وحل المشكلات.</p>
+          <button class="btn btn-secondary" onclick="alert('جاري فتح الاختبار المحوسب...')"><i class="fa-solid fa-play"></i> بدء الاختبار</button>
+        </div>
+        <div class="card">
+          <div class="card-icon"><i class="fa-solid fa-dna"></i></div>
+          <h4>ملخص الأحياء - الوراثة والجينات</h4>
+          <p>الصف العاشر - ملخص شامل مع رسومات توضيحية ومسائل تطبيقية تفاعلية.</p>
+          <button class="btn btn-secondary" onclick="alert('جاري تحميل الملخص...')"><i class="fa-solid fa-file-pdf"></i> تحميل الملخص</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer id="contact">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <h4>مدرسة ذكور مدينة إربد الإعدادية الثانية</h4>
+          <p>منصة بوابة المعلم الرقمية المخصصة لدعم المعلم والعملية التعليمية وتطوير أدوات التعلم التفاعلي والنشط.</p>
+        </div>
+        <div class="footer-col">
+          <h4>المناهج المعتمدة</h4>
+          <li>المناهج المطورة الحديثة 2026 / 2027</li>
+          <li>الصفوف: السابع، الثامن، التاسع، العاشر</li>
+          <li>بنك الأنشطة والاختبارات والألعاب التعليمية</li>
+        </div>
+        <div class="footer-col">
+          <h4>إشراف وإدارة</h4>
+          <p>الموقع الرسمي التعليمي للمدرسة</p>
+          <p class="highlight-admin"><i class="fa-solid fa-user-tie"></i> مدير المدرسة: لؤي الخطيب</p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>جميع الحقوق محفوظة © 2026 / 2027 - إدارة المدرسة: <span class="highlight-admin">مدير المدرسة لؤي الخطيب</span> - مدرسة ذكور مدينة إربد الإعدادية الثانية</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const curriculumData = {
+      g7: [
+        { title: "الرياضيات كولينز", desc: "الأعداد الصحيحة، النسبية، الجبر، والهندسة التحليلية المطورة." },
+        { title: "العلوم المتكاملة", desc: "بنية المادة، التفاعلات، الخلايا الحية، والحركة والطاقة." },
+        { title: "اللغة العربية", desc: "نصوص القراءة المعاصرة، القواعد النحوية، والتعبير الإبداعي." },
+        { title: "اللغة الإنجليزية", desc: "English Action Pack / Global Pulse والمهارات التواصلية." },
+        { title: "التربية الإسلامية", desc: "علوم القرآن والحديث النبوي والفقه الإسلامي الميسر." },
+        { title: "المهارات الرقمية", desc: "أساسيات البرمجة، التفكير الخوارزمي، والمواطنة الرقمية." }
+      ],
+      g8: [
+        { title: "الرياضيات المطورة", desc: "المعادلات الخطية ذات المتغيرين، نظرية فيثاغورس، والإحصاء والاحتمالات." },
+        { title: "العلوم الاستقصائية", desc: "الذرة والعناصر، التفاعل الكيميائي، المغناطيسية، والأنظمة البيئية." },
+        { title: "اللغة العربية", desc: "تحليل النصوص الأدبية، القواعد الصرفية، ومهارات الحوار." },
+        { title: "اللغة الإنجليزية", desc: "Developing Communication Skills and Reading Comprehension." },
+        { title: "التربية الإسلامية", desc: "السيرة النبوية، الأخلاق، والعقيدة الإسلامية." },
+        { title: "التكنولوجيا والمعلومات", desc: "تطوير الويب البسيط والذكاء الاصطناعي للمرحلة الأساسية." }
+      ],
+      g9: [
+        { title: "الرياضيات الحديثة", desc: "الاقترانات والتحليل الرياضي، المصفوفات، والهندسة الفضائية." },
+        { title: "الكيمياء المطورة", desc: "الجدول الدوري، الروابط الكيميائية، والحسابات الكيميائية." },
+        { title: "الفيزياء المطورة", desc: "الميكانيكا الكلاسيكية، القوى، والحركة في خط مستقيم ومستوى." },
+        { title: "العلوم الحياتية والأرض", desc: "البيولوجيا الجزيئية، التنوع الحيوي، وطبقات الأرض والجيولوجيا." },
+        { title: "اللغة العربية", desc: "البلاغة، فنون النثر والشعر، والمهارات الإملائية المتقدمة." },
+        { title: "الدراسات الاجتماعية", desc: "تاريخ الأردن المعاصر، الجغرافيا الاقتصادية، والتربية الوطنية." }
+      ],
+      g10: [
+        { title: "الرياضيات المتقدمة", desc: "التفاضل التأسيسي، المثلثات والدوال الدائرية، والتحليل الإحصائي." },
+        { title: "الفيزياء المتقدمة", desc: "الديناميكا، الكهرباء الساكنة والمتحركة، والأمواج والصوت والضوء." },
+        { title: "الكيمياء التخصصية", desc: "الكيمياء العضوية المبسطة، الكيمياء الحرارية، والاتزان الكيميائي." },
+        { title: "العلوم الحياتية المتقدمة", desc: "الوراثة المندلية والجزيئية، فسيولوجيا الكائنات، والتقانة الحيوية." },
+        { title: "الثقافة المالية", desc: "ريادة الأعمال، التخطيط المالي والمصرفي، وإدارة المشاريع." },
+        { title: "المهارات الرقمية المتقدمة", desc: "البرمجة بلغة بايثون وتطبيقات الذكاء الاصطناعي والأمن السيبراني." }
+      ]
+    };
+
+    function switchGrade(grade, btn) {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      renderCurriculum(grade);
+    }
+
+    function renderCurriculum(grade) {
+      const container = document.getElementById('grade-content');
+      container.innerHTML = '';
+      const items = curriculumData[grade] || [];
+      items.forEach(item => {
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.innerHTML = `
+          <div class="card-icon"><i class="fa-solid fa-book-bookmark"></i></div>
+          <h4>${item.title}</h4>
+          <p>${item.desc}</p>
+          <button class="btn btn-primary" onclick="alert('استعراض خطة ومواد: ${item.title}')">
+            <i class="fa-solid fa-eye"></i> عرض المحتوى
+          </button>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    // لعبة مطابقة البطاقات
+    const cardPairs = [
+      { text: "H₂O", pair: 1 }, { text: "الماء", pair: 1 },
+      { text: "CO₂", pair: 2 }, { text: "ثاني أكسيد الكربون", pair: 2 },
+      { text: "NaCl", pair: 3 }, { text: "ملح الطعام", pair: 3 },
+      { text: "س² - ص²", pair: 4 }, { text: "فرق بين مربعين", pair: 4 }
+    ];
+
+    let flippedCards = [];
+    let matchedCount = 0;
+    let score = 0;
+
+    function initMemoryGame() {
+      const grid = document.getElementById('memoryGrid');
+      grid.innerHTML = '';
+      flippedCards = [];
+      matchedCount = 0;
+      score = 0;
+      document.getElementById('score').innerText = 'النقاط: 0';
+
+      const shuffled = [...cardPairs].sort(() => 0.5 - Math.random());
+      shuffled.forEach((item, index) => {
+        const card = document.createElement('div');
+        card.className = 'memory-card';
+        card.dataset.pair = item.pair;
+        card.dataset.text = item.text;
+        card.innerText = '?';
+        card.onclick = () => flipCard(card);
+        grid.appendChild(card);
+      });
+    }
+
+    function flipCard(card) {
+      if (flippedCards.length < 2 && !card.classList.contains('flipped') && !card.classList.contains('matched')) {
+        card.classList.add('flipped');
+        card.innerText = card.dataset.text;
+        flippedCards.push(card);
+
+        if (flippedCards.length === 2) {
+          setTimeout(checkMatch, 700);
+        }
+      }
+    }
+
+    function checkMatch() {
+      const [card1, card2] = flippedCards;
+      if (card1.dataset.pair === card2.dataset.pair) {
+        card1.classList.add('matched');
+        card2.classList.add('matched');
+        score += 25;
+        matchedCount += 2;
+        document.getElementById('score').innerText = `النقاط: ${score}`;
+        if (matchedCount === cardPairs.length) {
+          if (typeof confetti === 'function') confetti();
+          setTimeout(() => alert('تهانينا! لقد أكملت اللعبة بنجاح وأحرزت النتيجة الكاملة!'), 300);
+        }
+      } else {
+        card1.classList.remove('flipped');
+        card1.innerText = '?';
+        card2.classList.remove('flipped');
+        card2.innerText = '?';
+      }
+      flippedCards = [];
+    }
+
+    // تهيئة الصفحة
+    window.onload = function() {
+      renderCurriculum('g7');
+      initMemoryGame();
+    };
+  </script>
+</body>
+</html>
